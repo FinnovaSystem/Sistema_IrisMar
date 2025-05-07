@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Añadir Propiedad</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    {% include 'base.html' %}
+    <div class="container">
+        <h1>Añadir Nueva Propiedad</h1>
+        <form action="{{ url_for('main.add_property') }}" method="POST">
+            <div class="form-group">
+                <label for="ciudad">Selecciona una Ciudad:</label>
+                <select name="ciudad" id="ciudad" required>
+                    {% for ciudad in ciudades %}
+                        <option value="{{ ciudad.id }}">{{ ciudad.nombre }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="titulo">Título:</label>
+                <input type="text" name="titulo" id="titulo" required>
+            </div>
+            <div class="form-group">
+                <label for="descripcion">Descripción:</label>
+                <textarea name="descripcion" id="descripcion" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="precio">Precio:</label>
+                <input type="number" name="precio" id="precio" required>
+            </div>
+            <div class="form-group">
+                <label for="tipo">Tipo de Propiedad:</label>
+                <select name="tipo" id="tipo" required>
+                    <option value="casa">Casa</option>
+                    <option value="apartamento">Apartamento</option>
+                    <option value="terreno">Terreno</option>
+                </select>
+            </div>
+            <div class="form-group" id="dormitorios-group" style="display: none;">
+                <label for="dormitorios">Número de Dormitorios:</label>
+                <input type="number" name="dormitorios" id="dormitorios" min="1">
+            </div>
+            <button type="submit">Añadir Propiedad</button>
+        </form>
+    </div>
+
+    <script>
+        // Mostrar/ocultar el campo de dormitorios según el tipo de propiedad
+        const tipoSelect = document.getElementById('tipo');
+        const dormitoriosGroup = document.getElementById('dormitorios-group');
+
+        tipoSelect.addEventListener('change', function () {
+            if (this.value === 'casa') {
+                dormitoriosGroup.style.display = 'block';
+            } else {
+                dormitoriosGroup.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>

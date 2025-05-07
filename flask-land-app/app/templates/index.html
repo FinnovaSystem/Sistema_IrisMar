@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Filtro de Propiedades - Mi Empresa</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <!-- Cabecera -->
+    <header class="navbar">
+        <div class="logo">
+            <a href="{{ url_for('main.filtrar_propiedades') }}">
+                    <img src="{{ url_for('static', filename='/logoYM.png') }}" alt="Logo de la Empresa">
+            </a>
+        </div>
+        <nav>
+            <a href="{{ url_for('main.index') }}">Inicio</a>
+            <a href="#" onclick="openModal('loginModal')">Iniciar Sesión</a>
+            <a href="{{ url_for('main.contacto') }}">Contacto</a>
+        </nav>
+    </header>
+
+    <!-- Modal de Iniciar Sesión -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('loginModal')">&times;</span>
+            <p>MY Propiedades</p>
+            <h2>Iniciar Sesión</h2>
+            <form action="{{ url_for('main.iniciar_sesion') }}" method="POST">
+                <label for="username">Usuario:</label>
+                <input type="text" id="username" name="username" required>
+                <label for="password">Contraseña:</label>
+                <input type="password" id="password" name="password" required>
+                <button type="submit" class="btn-primary">Iniciar Sesión</button>
+            </form>
+            <p>¿No tienes una cuenta? <a href="#" onclick="switchModal('loginModal', 'registerModal')">Regístrate aquí</a></p>
+        </div>
+    </div>
+
+    <!-- Modal de Registro -->
+    <div id="registerModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('registerModal')">&times;</span>
+            <p>MY Propiedades</p>
+            <h2>Registro</h2>
+            <form action="{{ url_for('main.registrarse') }}" method="POST">
+                <label for="new_username">Usuario:</label>
+                <input type="text" id="new_username" name="new_username" required>
+                <label for="email">Correo Electrónico:</label>
+                <input type="email" id="email" name="email" required>
+                <label for="new_password">Contraseña:</label>
+                <input type="password" id="new_password" name="new_password" required>
+                <button type="submit" class="btn-primary">Registrarse</button>
+            </form>
+            <p>¿Ya tienes una cuenta? <a href="#" onclick="switchModal('registerModal', 'loginModal')">Inicia Sesión aquí</a></p>
+        </div>
+    </div>
+
+    <section class="hero">
+        <div class="hero-text">
+            <h1>Encuentra la propiedad de tus sueños</h1>
+            <p>Explora terrenos, casas, departamentos.</p>
+        </div>
+    </section>
+
+
+    <div class ="Titulo_filtro">
+        <h1>Propiedades Disponibles</h1>
+    </div>
+
+    <section class="filters">
+        <form action="{{ url_for('main.filtrar_propiedades') }}" method="GET">
+            <!-- Selector de tipo de filtro -->
+            <label for="filtro">Filtrar por:</label>
+            <select name="filtro" id="filtro" onchange="this.form.submit()">
+                <option value="">-- Seleccionar --</option>
+                <option value="ciudad" {% if filtro == 'ciudad' %}selected{% endif %}>Ciudad</option>
+                <option value="departamento" {% if filtro == 'departamento' %}selected{% endif %}>Departamento</option>
+            </select>
+
+            <!-- Filtro por departamento -->
+            {% if filtro == 'departamento' %}
+                <label for="departamento">Selecciona un Departamento:</label>
+                <select name="departamento" id="departamento" onchange="this.form.submit()">
+                    <option value="">-- Seleccionar --</option>
+                    {% for departamento in departamentos %}
+                        <option value="{{ departamento.id }}" {% if departamento_id == departamento.id|string %}selected{% endif %}>
+                            {{ departamento.nombre }}
+                        </option>
+                    {% endfor %}
+                </select>
+
+                <!-- Filtro por ciudad dentro del departamento -->
+                {% if ciudades %}
+                    <label for="ciudad">Selecciona una Ciudad:</label>
+                    <select name="ciudad" id="ciudad" onchange="this.form.submit()">
+                        <option value="">-- Todas las ciudades --</option>
+                        {% for ciudad in ciudades %}
+                            <option value="{{ ciudad.id }}" {% if ciudad_id == ciudad.id|string %}selected{% endif %}>
+                                {{ ciudad.nombre }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                {% endif %}
+            {% endif %}
+
+            <!-- Filtro por ciudad -->
+            {% if filtro == 'ciudad' %}
+                <label for="ciudad">Selecciona una Ciudad:</label>
+                <select name="ciudad" id="ciudad" onchange="this.form.submit()">
+                    <option value="">-- Seleccionar --</option>
+                    {% for ciudad in ciudades %}
+                        <option value="{{ ciudad.id }}" {% if ciudad_id == ciudad.id|string %}selected{% endif %}>
+                            {{ ciudad.nombre }}
+                        </option>
+                    {% endfor %}
+                </select>
+            {% endif %}
+
+            <!-- Filtro por tipo de operación -->
+            <label for="tipo_operacion">Tipo de Operación:</label>
+            <select name="tipo_operacion" id="tipo_operacion" onchange="this.form.submit()">
+                <option value="indistinto" {% if tipo_operacion == 'indistinto' %}selected{% endif %}>Indistinto</option>
+                <option value="venta" {% if tipo_operacion == 'venta' %}selected{% endif %}>Venta</option>
+                <option value="alquiler" {% if tipo_operacion == 'alquiler' %}selected{% endif %}>Alquiler</option>
+            </select>
+
+            <!-- Filtro por tipo de propiedad -->
+            <label for="tipo_propiedad">Tipo de Propiedad:</label>
+            <select name="tipo_propiedad" id="tipo_propiedad" onchange="this.form.submit()">
+                <option value="indistinto" {% if tipo_propiedad == 'indistinto' %}selected{% endif %}>Indistinto</option>
+                <option value="terreno" {% if tipo_propiedad == 'terreno' %}selected{% endif %}>Terreno</option>
+                <option value="oficina" {% if tipo_propiedad == 'oficina' %}selected{% endif %}>Oficina</option>
+                <option value="departamento" {% if tipo_propiedad == 'departamento' %}selected{% endif %}>Departamento</option>
+                <option value="local" {% if tipo_propiedad == 'local' %}selected{% endif %}>Local</option>
+                <option value="casa" {% if tipo_propiedad == 'casa' %}selected{% endif %}>Casa</option>
+            </select>
+
+            <!-- Botón de limpiar filtro -->
+            <button type="button" onclick="window.location.href='/filtrar_propiedades'">Limpiar Filtro</button>
+        </form>
+    </section>
+
+    <!-- Resultados de propiedades -->
+    <section class="properties">
+        <h3>Propiedades Disponibles</h3>
+        {% if propiedades %}
+            <div class="property-grid">
+                {% for propiedad in propiedades %}
+                    <div class="property-card">
+                        <a href="{{ url_for('main.detalle_propiedad', id=propiedad.id) }}">
+                            <img src="{{ url_for('static', filename='Img-prop/' + (propiedad.imagen_cabecera or 'default.png')) }}" alt="{{ propiedad.titulo }}">                            <h3>{{ propiedad.titulo }}</h3>
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p>No se encontraron propiedades disponibles con los filtros seleccionados.</p>
+        {% endif %}
+    </section>
+
+    <!-- Información de contacto -->
+    <section class="contact-info" id="contacto">
+        <h2>Contacto</h2>
+        <p>¿Tienes preguntas? Contáctanos:</p>
+        <ul>
+            <li><strong>WhatsApp:</strong> +123 456 789</li>
+            <li><strong>Correo Electrónico:</strong> contacto@miempresa.com</li>
+        </ul>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 IrismMar. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script>
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = 'block';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        function switchModal(currentModalId, targetModalId) {
+            closeModal(currentModalId);
+            openModal(targetModalId);
+        }
+
+        // Cierra el modal si se hace clic fuera de él
+        window.onclick = function(event) {
+            const loginModal = document.getElementById('loginModal');
+            const registerModal = document.getElementById('registerModal');
+            if (event.target === loginModal) {
+                loginModal.style.display = 'none';
+            } else if (event.target === registerModal) {
+                registerModal.style.display = 'none';
+            }
+        };
+    </script>
+</body>
+</html>

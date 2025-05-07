@@ -1,0 +1,22 @@
+<section class="property-details">
+    {% if propiedad %}
+        <div class="details-container">
+            <!-- Galería de Imágenes -->
+            <div class="image-gallery">
+                {% for imagen in propiedad.imagenes.split(',') %}
+                    <img src="{{ url_for('static', filename='Img-prop/' + imagen) }}" alt="Imagen de {{ propiedad.titulo }}">
+                {% endfor %}
+            </div>
+
+            <!-- Detalles de la Propiedad -->
+            <div class="property-info">
+                <h2>{{ propiedad.titulo }}</h2>
+                <p><strong>Descripción:</strong> {{ propiedad.descripcion }}</p>
+                <p><strong>Precio:</strong> {{ propiedad.precio }} USD</p>
+                <p><strong>Tipo:</strong> {{ propiedad.tipo }}</p>
+            </div>
+        </div>
+    {% else %}
+        <p>No se encontraron detalles para esta propiedad.</p>
+    {% endif %}
+</section>
