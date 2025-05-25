@@ -115,30 +115,51 @@ nav a:hover {
 
 .filters label {
     font-weight: 600;
+    display: block; /* Asegura que las etiquetas ocupen su propia línea para mejor espaciado */
     margin-bottom: 0.5rem;
+    color: #333; /* Color de etiqueta un poco más oscuro para mejor contraste */
+    font-size: 0.9rem; /* Tamaño de fuente ligeramente ajustado para las etiquetas */
 }
 
-.filters select, .filters button {
-    width: 100%;
-    padding: 1rem;
+
+.filters select,
+.filters input[type="text"],
+.filters input[type="number"],
+.filters input[type="date"],
+.filters input[type="search"]{
+     width: 100%;
+    padding: 0.8rem 1rem; /* Padding ajustado para un look más refinado */
     margin-bottom: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 8px;
+    border: 1px solid #ddd; /* Borde más suave */
+    border-radius: 6px; /* Bordes ligeramente menos redondeados */
+    box-sizing: border-box; /* Para un manejo consistente del ancho y padding */
+    font-size: 0.95rem;
+    background-color: #fff; /* Fondo blanco para los campos */
+    transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Transiciones suaves */
 }
 
 .filters button {
+    width: 100%; /* Botón de ancho completo */
+    padding: 0.9rem 1.5rem; /* Padding generoso para el botón */
+    margin-bottom: 1rem; /* Mantenemos el margen inferior */
     background-color: #000000;
     border: none;
     color: #EFB810;
     font-weight: 600;
+    font-size: 1rem; /* Tamaño de fuente claro para el botón */
     cursor: pointer;
+    border-radius: 8px; /* Bordes redondeados consistentes */
+    text-transform: uppercase; /* Texto en mayúsculas para destacar */
+    letter-spacing: 0.5px; /* Ligero espaciado entre letras */
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .filters button:hover {
     background-color: #414141;
     color: #ffffff;
-
-}
+    transform: translateY(-2px); /* Efecto de elevación sutil */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); /* Sombra mejorada al pasar el cursor */
+ }
 
 /* Main Footer */
 .main-footer, .footer {
@@ -424,3 +445,157 @@ nav a:hover {
     font-size: 1.2rem;
     color: #2c3e50;
 }
+
+
+
+
+
+
+
+
+/* DISEÑO DETALLE_CASA*/
+.property-details {
+    max-width: 1200px;
+    margin: 2.5rem auto; /* Aumentado el margen vertical para mejor flujo en la página */
+    font-family: 'Segoe UI', 'Roboto', sans-serif; /* Pila de fuentes moderna y legible */
+    color: #333333; /* Color de texto principal, ligeramente oscuro para buena legibilidad */
+    padding: 2rem;
+    background-color: #ffffff; /* Fondo blanco limpio para el contenedor */
+    border-radius: 16px; /* Esquinas redondeadas más pronunciadas para un look suave */
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.07); /* Sombra sutil y moderna para dar profundidad */
+}
+
+.property-details h2, .property-details h3 {
+    color: #2c3e50; /* Color oscuro para los encabezados, buen contraste */
+    font-weight: 600; /* Encabezados ligeramente más gruesos */
+}
+
+.property-details h2 {
+    font-size: 2.2rem; /* Título principal de la propiedad más prominente */
+    margin-bottom: 1.75rem; /* Espaciado generoso debajo del título principal */
+}
+
+.property-details h3 {
+    font-size: 1.6rem; /* Títulos de subsección claros */
+    margin-bottom: 1.25rem; /* Buen espaciado para subtítulos */
+}
+
+.property-details p {
+    font-size: 1rem;
+    line-height: 1.7; /* Altura de línea mejorada para la legibilidad de párrafos */
+    margin-bottom: 1rem; /* Espaciado consistente entre párrafos */
+}
+
+.image-gallery {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem; /* Espaciado entre imágenes */
+    margin-bottom: 2.5rem; /* Espacio después de la galería */
+}
+
+.image-gallery img {
+    flex-grow: 1; /* Permite que las imágenes crezcan para llenar el espacio */
+    flex-shrink: 1; /* Permite que las imágenes se encojan si es necesario */
+    flex-basis: 280px; /* Ancho base para las imágenes, se ajustarán y envolverán en consecuencia */
+    height: 220px; /* Altura fija para un aspecto uniforme */
+    object-fit: cover; /* Asegura que la imagen cubra el área, recortando si es necesario */
+    border-radius: 12px; /* Esquinas más suaves para las imágenes */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08); /* Sombra sutil para dar profundidad */
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; /* Efectos de hover suaves */
+}
+
+.image-gallery img:hover {
+    transform: translateY(-5px) scale(1.02); /* Eleva y escala ligeramente la imagen al pasar el cursor */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12); /* Sombra mejorada al pasar el cursor */
+}
+
+.property-details ul {
+    list-style: none;
+    padding: 0;
+    margin-top: 1.5rem; /* Espacio antes de las listas */
+}
+
+.property-details ul li {
+    margin-bottom: 0.9rem; /* Más espacio entre los elementos de la lista */
+    font-size: 1rem;
+    line-height: 1.6; /* Mejor legibilidad para los elementos de la lista */
+    padding-left: 1.5rem; /* Espacio para un posible icono o simplemente indentación */
+    position: relative; /* Para el pseudo-elemento del icono */
+}
+
+/* Opcional: Añadir una viñeta o icono pequeño a los elementos de la lista para un toque moderno */
+.property-details ul li::before {
+    content: "•"; /* Viñeta simple, puede ser reemplazada por un icono SVG o fuente de iconos */
+    position: absolute;
+    left: 0;
+    color: #EFB810; /* Color de acento de la barra de navegación para consistencia */
+    font-weight: bold;
+    font-size: 1.2em; /* Ajustar tamaño de la viñeta */
+}
+
+.property-details ul li strong {
+    color: #2c3e50;
+    font-weight: 700; /* Texto strong más destacado */
+}
+
+/* Estilos para el Lightbox de Imágenes */
+.image-lightbox {
+    display: none; /* Oculto por defecto */
+    position: fixed;
+    z-index: 1050; /* Asegurar que esté por encima de otros modales si los hay */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.85); /* Fondo oscuro más oUPDATE irismar.datos_terrenos SET precio = NULL WHERE precio = '123.45';
+    aco para enfocar la imagen */
+    backdrop-filter: blur(5px);
+    justify-content: center;
+    align-items: center;
+}
+
+.image-lightbox-content {
+    position: relative;
+    margin: auto;
+    padding: 30%; /* Evita padding que reduzca el espacio para la imagen */
+    display: flex; /* Usamos flex para centrar la imagen dentro de este contenedor */
+    justify-content: center;
+    align-items: center;
+    max-width: 100vw; /* Permitimos que el contenido ocupe hasta el 92% del ancho de la ventana */
+    max-height: 100vh; /* Permitimos que el contenido ocupe hasta el 92% del alto de la ventana */
+    animation: zoomIn 0.3s ease-in-out; /* Aplicamos la animación aquí */
+}
+
+.image-lightbox-content img {
+    /* La imagen intentará ocupar el 100% del espacio de su contenedor */
+    width: 100%;
+    height: 100%;
+    /* object-fit: contain se asegura de que la imagen se escale manteniendo su proporción y sin ser recortada */
+    object-fit: contain;
+    border-radius: 8px; /* Opcional: bordes redondeados para la imagen grande */
+}
+
+.lightbox-close {
+    position: absolute;
+    top: 15px;
+    right: 35px;
+    color: #f1f1f1;
+    font-size: 40px;
+    font-weight: bold;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.lightbox-close:hover,
+.lightbox-close:focus {
+    color: #bbb;
+    text-decoration: none;
+}
+
+/* Animación para el zoom de la imagen en el lightbox */
+@keyframes zoomIn {
+    from {transform: scale(1); opacity: 0;}
+    to {transform: scale(4); opacity: 1;}
+}
+

@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="property-details">
+    {% if propiedad %}
+        <h2>{{ propiedad.titulo }}</h2>
+        <h3>IMAGENES DE LA PROPIEDAD</h3>
+
+        <div class="image-gallery">
+            {% if imagenes %}  {# Check if imagenes is not empty #}
+                {% for imagen in imagenes %}
+                    <img src="{{ url_for('static', filename='Img-prop/' + imagen.dir_img) }}" alt="Imagen de {{ propiedad.titulo }}">
+                {% endfor %}
+            {% else %}
+                <p>No hay imágenes disponibles para esta propiedad.</p>  {# Provide feedback if no images #}
+            {% endif %}
+        </div>
+
+        <div class="rental-info"><h3>Precio: {{ datos.precio }} {{ tipo_moneda }}</h3></div>
+
+        <div class="basic-info">
+            <h3>Información Básica</h3>
+            <ul>
+                <li><strong>Ubicado en la ciudad de:</strong> {{ propiedad.ciudad }}</li>
+                <li><strong>Dimensiones:</strong> {{ datos.dimension }}</li>
+                <li><strong>Medidas:</strong> {{ datos.medidas }}</li>  {# Assuming this is different from dimensions #}
+                <li><strong>Dormitorios:</strong> {{ datos.dormitorios }} Dormitorios</li>
+                <li><strong>Baños:</strong> {{ datos.baños }}</li>
+                {% if datos.niveles %}
+                    <li><strong>Niveles:</strong> {{ datos.niveles }}</li>
+                {% endif %}
+                {# You can add more fields here as needed #}
+            </ul>
+        </div>
+
+        <div class="features">
+            <h3>Características</h3>
+            <ul >
+                {% if datos.piscina %}
+                    <li><strong>Piscina:</strong> {{ datos.piscina }}</li>
+                {% endif %}
+                {% if datos.quincho %}
+                    <li><strong>Quincho:</strong> {{ datos.quincho }}</li>
+                {% endif %}
+                {% if datos.cochera %}
+                    <li><strong>Cochera:</strong> {{ datos.cochera }}</li>
+                {% endif %}
+                {# Add other features dynamically based on your 'datos' #}
+            </ul>
+        </div>
+        <br>
+        <div class="description">
+            <h3>Descripción</h3>
+            {% if datos.descripcion %}
+                <p>{{ datos.descripcion }}</p>
+            {% else %}
+                <p>No hay descripción disponible para esta propiedad.</p>
+            {% endif %}
+        </div>
+
+        {# This section was present in the original "casa" template, adapt as needed #}
+        {# <div class="additional-info">
+            <h3>Información Adicional</h3>
+            <ul>
+                <li><strong>Sala:</strong> {{ datos.sala }}</li>
+                <li><strong>Cocina:</strong> {{ datos.cocina }}</li>
+                <li><strong>Lavadero:</strong> {{ datos.lavadero }}</li>
+            </ul>
+        </div> #}
+
+    {% else %}
+        <p>No se encontraron detalles para esta propiedad.</p>
+    {% endif %}
+</section>
+{% endblock %}

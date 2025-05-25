@@ -20,7 +20,6 @@ class Propiedad(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     titulo = db.Column(db.String(200), nullable=False)
     descripcion = db.Column(db.Text, nullable=True)
-    precio = db.Column(db.Float, nullable=False)
     tipo = db.Column(db.Enum('casa', 'apartamento', 'terreno'), nullable=False)
     dormitorios = db.Column(db.Integer, nullable=True)
     ciudad_id = db.Column(db.Integer, db.ForeignKey('Ciudad.id', ondelete='CASCADE'), nullable=False)

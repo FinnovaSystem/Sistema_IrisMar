@@ -9,6 +9,7 @@ def create_app():
     app = Flask(__name__, instance_relative_config=True)
     app.config.from_object(Config)
     app.config['UPLOAD_FOLDER'] = os.path.join('static', 'Img-prop')  # Configura la carpeta de subidas
+    
 
 
     db.init_app(app)

@@ -1,0 +1,38 @@
+{% extends "base.html" %} <!-- Extiende de tu plantilla base -->
+
+{% block content %}
+<section class="property-details">
+    {% if propiedad %}
+        <!-- Título de la Propiedad -->
+        <h2>{{ propiedad.titulo }}</h2>
+        <h3>ALQUILER TEMPORARIO</h3>
+
+        <!-- Galería de Imágenes -->
+        <div class="image-gallery">
+            {% for imagen in imagenes %}
+                <img src="{{ url_for('static', filename='Img-prop/' + imagen.dir_img) }}" alt="Imagen de {{ propiedad.titulo }}">
+            {% endfor %}
+        </div>
+        {% extends "base.html" %}
+
+{% block content %}
+<section class="property-details">
+    <h2>{{ propiedad.titulo }}</h2>
+    <p><strong>Ciudad:</strong> {{ propiedad.ciudad }}</p>
+    <p><strong>Departamento:</strong> {{ propiedad.departamento }}</p>
+    <p><strong>Descripción:</strong> {{ propiedad.descripcion }}</p>
+    <h3>Detalles del Depósito</h3>
+    <ul>
+        <li><strong>Dimensiones:</strong> {{ datos.dimension }}</li>
+        <li><strong>Medidas:</strong> {{ datos.medidas }}</li>
+        <li><strong>Precio:</strong> {{ datos.precio }}</li>
+        <li><strong>Baños:</strong> {{ datos.baños }}</li>
+        <li><strong>Oficina:</strong> {{ datos.oficina }}</li>
+        <li><strong>Estacionamiento:</strong> {{ datos.estacionamiento }}</li>
+    </ul>
+</section>
+{% else %}
+        <p>No se encontraron detalles para esta propiedad.</p>
+    {% endif %}
+</section>
+{% endblock %}

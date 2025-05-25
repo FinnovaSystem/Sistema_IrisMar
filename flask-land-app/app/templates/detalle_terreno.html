@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="property-details">
+    {% if propiedad %}
+        <h2>{{ propiedad.titulo }}</h2>
+        <h3>IMAGENES DE LA PROPIEDAD</h3>
+
+      
+        <div class="image-gallery">
+            {% if imagenes %}
+                {% for imagen in imagenes %}
+                    <img src="{{ url_for('static', filename='Img-prop/' + imagen.dir_img) }}" alt="Imagen de {{ propiedad.titulo }}">
+                {% endfor %}
+            {% else %}
+                <p>No hay imágenes disponibles para esta propiedad.</p>
+            {% endif %}
+        </div>
+        
+        <div class="rental-info"><h3>Precio: {{ datos.precio }} {{ tipo_moneda }}</h3></div>
+
+        <div class="description">
+            <h3>Descripción del Terreno</h3>
+            {% if datos.descripcion or propiedad.descripcion %}
+                <p>{{ datos.descripcion if datos.descripcion else propiedad.descripcion }}</p>
+            {% else %}
+                <p>No hay descripción disponible para esta propiedad.</p>
+            {% endif %}
+        </div>
+
+        <div class="basic-info">
+            <h3>Información Básica del Terreno</h3>
+            <ul>
+                <li><strong>Ubicado en la ciudad de:</strong> {{ propiedad.ciudad }}</li>
+                {% if datos.dimension_terreno %}
+                    <li><strong>Dimensiones:</strong> {{ datos.dimension_terreno }}</li>
+                {% endif %}
+                {% if datos.area_terreno %}
+                    <li><strong>Área Total:</strong> {{ datos.area_terreno }} Mts2.</li>
+                {% endif %}
+                 {# Agrega más campos básicos específicos de terreno aquí si existen en 'datos' #}
+            </ul>
+        </div>
+        <br>
+        <div class="features">
+            <h3>Características Adicionales</h3>
+            <ul>
+                {% if datos.topografia %}
+                    <li><strong>Topografía:</strong> {{ datos.topografia }}</li>
+                {% endif %}
+                 {# Ejemplo: {% if datos.uso_suelo %}<li>Uso de Suelo Permitido: {{ datos.uso_suelo }}</li>{% endif %} #}
+            </ul>
+        </div>
+    {% else %}
+        <p>No se encontraron detalles para esta propiedad.</p>
+    {% endif %}
+</section>
+{% endblock %}

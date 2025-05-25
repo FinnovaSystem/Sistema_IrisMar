@@ -1,22 +1,90 @@
+{% extends "base.html" %} <!-- Extiende de tu plantilla base -->
+
+{% block content %}
 <section class="property-details">
     {% if propiedad %}
-        <div class="details-container">
-            <!-- Galería de Imágenes -->
-            <div class="image-gallery">
-                {% for imagen in propiedad.imagenes.split(',') %}
-                    <img src="{{ url_for('static', filename='Img-prop/' + imagen) }}" alt="Imagen de {{ propiedad.titulo }}">
-                {% endfor %}
-            </div>
+        <!-- Título de la Propiedad -->
+        <h2>{{ propiedad.titulo }}</h2>
+        <h3>ALQUILER TEMPORARIO</h3>
 
-            <!-- Detalles de la Propiedad -->
-            <div class="property-info">
-                <h2>{{ propiedad.titulo }}</h2>
-                <p><strong>Descripción:</strong> {{ propiedad.descripcion }}</p>
-                <p><strong>Precio:</strong> {{ propiedad.precio }} USD</p>
-                <p><strong>Tipo:</strong> {{ propiedad.tipo }}</p>
-            </div>
+        <!-- Galería de Imágenes -->
+        <div class="image-gallery">
+            {% for imagen in imagenes %}
+                <img src="{{ url_for('static', filename='Img-prop/' + imagen.dir_img) }}" alt="Imagen de {{ propiedad.titulo }}">
+            {% endfor %}
+        </div>
+
+        <!-- Alquiler Temporario -->
+        <div class="rental-info">
+            <h3>Alquiler Temporario</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Período</th>
+                        <th>Valor</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Por día</td>
+                        <td>Gs. 2.775.000</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Información Básica -->
+        <div class="basic-info">
+            <h3>Información Básica</h3>
+            <ul>
+                {% for item in items %}
+                    {% if item.nombre in ['Dormitorios', 'Baños', 'Toilettes', 'Cocheras', 'Plantas', 'Antigüedad', 'Tipo de Casa'] %}
+                        <li><strong>{{ item.nombre }}:</strong> {{ item.valor }}</li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </div>
+
+        <!-- Superficies y Medidas -->
+        <div class="measurements">
+            <h3>Superficies y Medidas</h3>
+            <ul>
+                {% for item in items %}
+                    {% if item.nombre in ['Terreno', 'Cubierta', 'Superficie Total'] %}
+                        <li><strong>{{ item.nombre }}:</strong> {{ item.valor }}</li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="description">
+            <h3>Descripción</h3>
+            <p>{{ descripcion }}</p>
+            <p><strong>Descripción:</strong></p>
+            <ul>
+                {% for item in items %}
+                    {% if item.nombre in ['Terreno', 'Construido'] %}
+                        <li><strong>{{ item.nombre }}:</strong> {{ item.valor }}</li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+            <p><strong>Casa Principal:</strong></p>
+            <ul>
+                {% for item in items %}
+                    {% if item.nombre in ['Dormitorios', 'Baños', 'Cocina', 'Living comedor con chimenea', 'Quincho con parrilla', 'Galería', 'Piscina', 'Estacionamiento', 'Arroyo interno', 'Cancha de tenis'] %}
+                        <li>{{ item.nombre }}: {{ item.valor }}</li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+            <p><strong>Precio de alquiler por mes:</strong> </p>
+            <p><strong>Obs:</strong> NO DISPONIBLE VERANO 2024.</p>
         </div>
     {% else %}
         <p>No se encontraron detalles para esta propiedad.</p>
     {% endif %}
 </section>
+{% else %}
+        <p>No se encontraron detalles para esta propiedad.</p>
+    {% endif %}
+</section>
+{% endblock %}
