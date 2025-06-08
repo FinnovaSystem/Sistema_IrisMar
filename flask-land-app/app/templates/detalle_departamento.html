@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="property-details">
+    {% if propiedad %}
+        <h2>{{ propiedad.titulo }}</h2>
+        <h3>IMAGENES DE LA PROPIEDAD</h3>
+
+        <div class="image-gallery">
+            {% if imagenes %}
+                {% for imagen in imagenes %}
+                    <img src="{{ url_for('static', filename='Img-prop/' + imagen.dir_img) }}" alt="Imagen de {{ propiedad.titulo }}">
+                {% endfor %}
+            {% else %}
+                <p>No hay imágenes disponibles para esta propiedad.</p>
+            {% endif %}
+        </div>
+
+        <div class="rental-info"><h3>Precio: {{ datos.precio }} {{ tipo_moneda }}</h3></div>
+
+        <div class="description">
+            <h3>Descripción</h3>
+            {% if datos.descripcion or propiedad.descripcion %}
+                <p>{{ datos.descripcion if datos.descripcion else propiedad.descripcion }}</p>
+            {% else %}
+                <p>No hay descripción disponible para esta propiedad.</p>
+            {% endif %}
+        </div>
+
+        <div class="basic-info">
+            <h3>Información Básica</h3>
+            <ul>
+                <li><strong>Ubicado en la ciudad de:</strong> {{ propiedad.ciudad }}</li>
+                {# Asumiendo que departamento también viene de propiedad si es necesario #}
+                {# <li><strong>Departamento:</strong> {{ propiedad.departamento }}</li> #}
+                <li><strong>Dimensiones:</strong> {{ datos.dimension }}</li>
+                <li><strong>Medidas:</strong> {{ datos.medidas }}</li>
+                <br>
+                <p><strong>Equipado con:</strong></p>
+                {% if datos.dormitorios %}
+                    <li> <strong>{{ datos.dormitorios }}</strong><strong> Dormitorios</strong></li>
+                {% endif %}
+                {% if datos.baños %}
+                    <li><strong>{{ datos.baños }}</strong> <strong>Baños</strong></li>
+                {% endif %}
+                {% if datos.piso %}
+                    <li><strong>Piso N°:</strong> {{ datos.piso }}</li>
+                {% endif %}
+                {# Puedes añadir más campos específicos de departamento aquí si existen en 'datos' #}
+            </ul>
+        </div>
+        <br>
+        <div class="features">
+            <h3>Más Características</h3>
+            <ul>
+                {# Adapta estas características según los campos en tu tabla datos_departamentos #}
+                {% if datos.ambientes %}
+                    <li><strong>Ambientes:</strong> {{ datos.ambientes }}</li>
+                {% endif %}
+                 {# Ejemplo: {% if datos.balcon %}<li>Balcón: {{ datos.balcon }}</li>{% endif %} #}
+            </ul>
+        </div>
+    {% else %}
+        <p>No se encontraron detalles para esta propiedad.</p>
+    {% endif %}
+{% endblock %}
